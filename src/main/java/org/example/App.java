@@ -1,6 +1,7 @@
 package org.example;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -15,22 +16,9 @@ public class App {
 //        long end = System.currentTimeMillis();
 //        System.out.println("Total time (with out threads): " + (end - start) + " ms");
 
-        Thread t1 = new Thread(() -> task("Task 1"));
-        Thread t2 = new Thread(() -> task("Task 2"));
-        Thread t3 = new Thread(() -> task("Task 3"));
-        t1.start();
-        t2.start();
-        t3.start();
-
-        try {
-            t1.join();
-            t2.join();
-            t3.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        long end = System.currentTimeMillis();
-        System.out.println("Total time (with threads): " + (end - start) + " ms");
+//
+        Character result = firstNonRepeatableChars("npn");
+        System.out.println(result);
     }
 
     public static void reverseString(String input) {
@@ -210,6 +198,20 @@ public class App {
         }
         return stringMap;
     }
+
+    public static Character firstNonRepeatableChars(String input){
+        Map<Character , Integer> stringMap= new LinkedHashMap<>();
+        for (char c : input.toCharArray()){
+            stringMap.put(c, stringMap.getOrDefault(c,0)+1);
+        }
+        for (char c : stringMap.keySet()){
+            if (stringMap.get(c)==1){
+                return c;
+            }
+        }
+        return null;
+    }
+
 
 
 }
